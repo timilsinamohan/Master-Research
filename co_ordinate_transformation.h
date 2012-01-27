@@ -267,19 +267,6 @@ printf("\n");
 	y_co[i]=f[i];
 	}
 
-//code to store respective x and y coordintate of the cities in the map
-	/*
-	for(int i=0;i<cnt;i++){
-	
-       
-	x_co[i]=f[i];
-	else
-	y_co[i]=f[i];	 
-	}
-*/
-//code to use cairo graphics to draw the node points
-
-
 
 
 	
@@ -292,20 +279,6 @@ printf("\n");
 	{
 
 
-       cairo_surface_t *surface;
-        cairo_surface_t *surface1; 
- 
-  	cairo_t *cr;
-   	cairo_t *cr1;
-
-        surface = cairo_image_surface_create_from_png ("prj1.png"); //reading the png file 
-        cr = cairo_create(surface);
-        int w = cairo_image_surface_get_width (surface);
-        int h = cairo_image_surface_get_height (surface); 
-        cout<<w<<"\t"<<h<<endl;
-   
-      surface1 = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h); //this is for the surface without background
-    cr1 = cairo_create(surface1);
 	ofstream outFile;
 	outFile.open("map_coordinate.txt"); //opening the file to store the co_ordinate of the map
 	
@@ -324,29 +297,6 @@ printf("\n");
     for(m=0;m<73;m++){
       cout<<"x_co:"<<x_co[m*2] <<"\t"<<"y_co:"<<821-y_co[m*2+1]<<"\n";
 	}
-
-     cairo_set_source_rgb (cr, 1, 0, 0);
-      cairo_arc (cr,x_co[2*k],821-y_co[2*k+1],5,0,2*M_PI);
-      cairo_fill(cr); 
-      cairo_stroke (cr);
-
-      cairo_set_source_rgb (cr1, 1, 0, 0);
-      cairo_arc (cr1,x_co[2*k],821-y_co[2*k+1],2,0,2*M_PI);
-      cairo_fill(cr1); 
-      cairo_stroke (cr1);		 
-	
- 
-
-
- cairo_surface_write_to_png(surface, "thai_img.png"); //Display the read file 
- 
- cairo_surface_destroy (surface);
- cairo_destroy(cr);  
- 
- cairo_surface_write_to_png(surface1, "thai_img1.png"); 
- cairo_surface_destroy (surface1);
- cairo_destroy(cr1);   
-
 
 }
 
