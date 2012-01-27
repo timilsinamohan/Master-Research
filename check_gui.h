@@ -3,7 +3,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <time.h>
-#include<fstream>
+#include <fstream>
 #include <iostream>
 #include <stdlib.h>
 #include <cstdlib> 
@@ -25,8 +25,6 @@ int break_point=0;
   
 
 cairo_surface_t *image;
-cairo_surface_t *surface1;
-cairo_surface_t *surface2;
 class check_gui
 {
 
@@ -50,9 +48,6 @@ static double alpha = 1;
 
  cairo_set_source_surface(cr, image, 10, 10);
  cairo_paint_with_alpha(cr, alpha);
-// cairo_set_source_surface(cr, surface1, 250, 10);
-// cairo_paint_with_alpha(cr, alpha);
- 
 
  
 double i=0;
@@ -98,19 +93,6 @@ double i=0;
   {
      node[i]=i; //storing the information of the nodes
    }
- //int random_integer;
-  //srand ( time(NULL) );
-	for(unsigned int i=0;i<lines.size();i++){
-	
-	for(unsigned int j=0;j<lines.size();j++){
-	//random_integer = rand() %100+1;
-        if(j%13 && j%17==0 && j<=i)
-	{
-	a[i][j]=1;
-	}
-	
-	}	
-	} 
 
 	
 for(unsigned int i=0;i<lines.size();i++){
@@ -136,7 +118,7 @@ for(unsigned int i=0;i<lines.size();i++){
 
         for(unsigned int j=0;j<lines.size();j++)
         {
-                if (break_point==0 )//|| break_point==3)
+                if (break_point==0 || break_point==3)
                 { 
                         if(a[i][j]==1 )
                         {
@@ -395,7 +377,7 @@ cout<< break_point<<"\t";
    cout<<"Out Degree calculation.............................."<<endl;
    
   for (boost::tie(ui, ui_end) = vertices(g); ui != ui_end; ui++){
-    deg[*ui] = out_degree(*ui, g);  
+    deg[*ui] = out_degree(*ui, g); 
     cout<<deg[*ui]<<endl;
   }
   	 cout<<"Total Degree calculation.............................."<<endl;
@@ -639,7 +621,7 @@ void calling_epidemic_gui(){
 
 
   g_signal_connect(G_OBJECT(window), "expose-event",
-    G_CALLBACK(on_expose_event), NULL);
+  G_CALLBACK(on_expose_event), NULL);
   g_signal_connect(G_OBJECT(window), "destroy",
    G_CALLBACK(gtk_main_quit), NULL);
 
@@ -650,11 +632,10 @@ void calling_epidemic_gui(){
   gtk_widget_set_app_paintable(window, TRUE);
   gtk_widget_show_all(window);
 
-  gtk_main();
+ // gtk_main();
 
  
 }
 }
 };
 #endif
-
