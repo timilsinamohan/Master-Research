@@ -14,6 +14,7 @@
 #include <boost/graph/adjacency_list.hpp> 
 #include <vector>
 #include <boost/graph/properties.hpp>
+#define N 73
 
 
 #ifndef final_gui_H
@@ -234,11 +235,11 @@ public:
 
 
  
-		cairo_set_source_rgb (cr, 0.5, 0,0);
+		cairo_set_source_rgb (cr, 1, 1,0);
 		cairo_arc (cr,330,710,4.0,0,2*M_PI);
 		cairo_fill(cr);
 		cairo_stroke(cr);
-		cairo_set_source_rgb (cr, 0, 0,0);
+		cairo_set_source_rgb (cr, 1, 0,0);
 		cairo_move_to(cr,340,720);
 		cairo_show_text (cr, "Susceptible");
 		
@@ -277,7 +278,7 @@ public:
   for(unsigned int i=0;i<73;i++)
   {
   usleep(10000);
-  cairo_set_source_rgba(cr, 0, 1, 0,1);
+  cairo_set_source_rgba(cr, 0, 0, 0,1);
   cairo_set_line_width (cr, 0.3); 
   cairo_arc(cr, points[i][0]+10, points[i][1], 4, 0,M_PI*2);
   cairo_stroke_preserve(cr);
@@ -285,6 +286,41 @@ public:
  // usleep(100000); 
  
  }
+ 
+ int first_infected_node[0][N];
+ 
+ ifstream inFile1 ("simulation.txt", ios::in);
+ int buffer;
+ 
+ for(int i=0;i<N;i++)
+      {
+	
+	  inFile1>>first_infected_node[0][i];  
+	  	   		
+      }
+      
+       for(int i=0;i<N;i++)
+      {
+	
+	 if(first_infected_node[0][i]==1)
+	 {
+	   buffer=i;
+	   break;
+	 }
+	 
+	  	   		
+      }
+      
+      cout<<"BUFFER!!" <<buffer<<endl;
+      
+      
+    cairo_set_source_rgba(cr, 1, 0, 0,1);  
+    cairo_set_line_width (cr, 0.3);
+    cairo_arc(cr, points[buffer][0]+10, points[buffer][1], 4, 0,M_PI*2);
+    cairo_stroke_preserve(cr);
+    cairo_fill(cr);
+      
+      
  
  // code to draw the network for the disease and degree distribution
  
@@ -341,7 +377,7 @@ public:
 	    if(distance_storage<=115)
 	    {
 	     adjacency_matrix[i][j]=1;
-	     usleep(1000);
+	     usleep(5000);
 	     cairo_move_to(cr,points[i][0]+10,points[i][1]);  
 	     cairo_line_to(cr,points[j][0]+10,points[j][1]);
 	    cairo_stroke_preserve(cr);
@@ -395,6 +431,8 @@ public:
 	   
 	 }
 	 cout<<"Hello !!"<<endl;
+	//  cout<< random_out_degree_picker<<endl;
+	 
 	  cout<< highest_degree_in_file<<endl;
 	 
 	 cairo_set_source_rgb (cr, 0, 0, 0);
@@ -559,15 +597,21 @@ public:
 	
 	
 // codes to demonstrate susceptible infected and recovered nodes
+	 
+	  
+	       unsigned int simulation_time_stamp=35;
+		//int j_caller=0;
+		int m[simulation_time_stamp][N];//n[73];
 		
-		int j_caller=0;
-		double m[73];//n[73];
+		
 		ifstream inFile ("simulation.txt", ios::in); //file to read the timestamp of the simulation result
 				
-	      for(unsigned int i=0;i<73;i++)
+	      for(unsigned int i=0;i<simulation_time_stamp;i++)
 	      {
+		for(unsigned int j=0;j<N;j++)
 		
-		inFile>>m[i];
+		
+		inFile>>m[i][j];
 	      
 	      }
 	
@@ -576,24 +620,24 @@ public:
 
 	
 	
-	cout<<"this is m[j]"<<endl;
 	
-  for(unsigned int i=0;i<73;i++)
+	
+  for(unsigned int i=0;i<simulation_time_stamp;i++)
   {
 	
 		
-        for(unsigned int j=0;j<73;j++)
+        for(unsigned int j=0;j<N;j++)
         {
-	  
+	  usleep(3000);
 	
 		 
             
-                        if(m[j]>=0.02 ) //0.03 is the infected probablity and shows the infection occurs 
+                        if(m[i][j]==0 ) //0.03 is the infected probablity and shows the infection occurs 
                         {
 			 
 				
-			usleep(1000);  
-			cairo_set_source_rgb(cr, 1, 0, 0);
+			  
+			cairo_set_source_rgb(cr, 1, 1, 0);
 			
 			cairo_set_line_width (cr, 0.3);
                         cairo_arc(cr,points[j][0]+10,points[j][1],4, 0,M_PI*2);
@@ -602,8 +646,8 @@ public:
 			cairo_fill(cr);
 		
 			
-			if(j_caller>30)
-			  break;
+			//if(j_caller>30)
+			 // break;
 			
 			/*else {
 			 // usleep(1000); 
@@ -627,6 +671,41 @@ public:
 			j_caller++;
 			}*/
                         }
+                        
+                        if(m[i][j]==1 )
+			{
+			
+			  
+			cairo_set_source_rgb(cr, 1, 0, 0);
+			
+			cairo_set_line_width (cr, 0.3);
+                        cairo_arc(cr,points[j][0]+10,points[j][1],4, 0,M_PI*2);
+			
+			cairo_stroke_preserve(cr);
+			cairo_fill(cr);
+			  
+			  	  
+			  
+			  
+			} 
+			
+			 if(m[i][j]==2 )
+			{
+			//usleep(6000);   
+			cairo_set_source_rgb(cr, 0, 1, 0);
+			
+			cairo_set_line_width (cr, 0.3);
+                        cairo_arc(cr,points[j][0]+10,points[j][1],4, 0,M_PI*2);
+			
+			cairo_stroke_preserve(cr);
+			cairo_fill(cr);
+			  
+			  	  
+			  
+			  
+			} 
+                        
+                        
                                             
                 }
  
@@ -663,9 +742,10 @@ void calling_epidemic_gui(){
   
   gtk_widget_set_app_paintable(window, TRUE);
   gtk_widget_show_all(window);
+ 
  g_signal_connect(G_OBJECT(window), "destroy",
    G_CALLBACK(gtk_main_quit), NULL);
- 
+
   g_signal_connect(visualize, "clicked", 
      G_CALLBACK(on_expose_event), NULL);
 
