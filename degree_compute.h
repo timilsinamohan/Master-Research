@@ -14,6 +14,8 @@
 #include <boost/graph/adjacency_list.hpp> 
 #include <vector>
 #include <boost/graph/properties.hpp>
+#define N 73
+
 #ifndef degree_compute_H
 #define degree_compute_H
 
@@ -46,7 +48,7 @@ public:
       string line ;
       vector<string> lines ;
       while( getline( file1, line ) ) lines.push_back( line ) ;
-      cout << "graph_topology: " << lines.size()<< '\n' ;
+    //  cout << "graph_topology: " << lines.size()<< '\n' ;
       Graph g(lines.size());
       Graph1 g1(lines.size());
       
@@ -62,20 +64,19 @@ public:
 	    
 	 ifstream file("graph_topology.txt", ios::in);
 
-	 int a[lines.size()][lines.size()];
-	  while (!file.eof())
-	  {
+	 int a[N][N];
+	 
 	  
-	  for(int n=0; n<73; n++)// col. number
+	  for(unsigned int i=0; i < N; i++)// col. number
 	  {
-	  for(int m=0; m<73; m++)// rows number
-	  {
-	  file >> a[m][n];
-	 // cout<<  a[m][n];
+	      for(unsigned int j=0; j< N; j++)// rows number
+	      {
+		  file >> a[i][j];
+	    
+	      }
+	      
 	  }
-	   //cout<< endl;
-	  }
-	  }
+	  
 	  
   int degree_in[lines.size()];
     for(unsigned int i=0;i<lines.size();i++){
@@ -89,12 +90,9 @@ public:
     }
     graph_traits<Graph>::vertex_iterator ui, ui_end;
     property_map<Graph,vertex_degree_t>::type deg = get(vertex_degree, g);
-    cout<<"Out Degree calculation.............................."<<endl;
+  //  cout<<"Out Degree calculation.............................."<<endl;
     
-   
-    // Creating the stochastic matrix from the adjacency_matrix
-  
-  
+ 
    
       
     
@@ -124,23 +122,23 @@ public:
       
       
 	   
-    cout<<"Total Degree calculation.............................."<<endl;  
+  //  cout<<"Total Degree calculation.............................."<<endl;  
     graph_traits<Graph1>::vertex_iterator ui1, ui1_end;
     property_map<Graph1,vertex_degree_t>::type deg1 = get(vertex_degree, g1);
     int degree_counter=0;
     for (boost::tie(ui1, ui1_end) = vertices(g1); ui1 != ui1_end; ui1++){
     deg1[*ui1]=degree(*ui1, g1);
-    cout<<deg1[*ui1]<<endl;
+   // cout<<deg1[*ui1]<<endl;
    //Here we will get the total degree of the each nodes
    total_degree_information[degree_counter]= deg1[*ui1];
    degree_counter++;
    // return deg1[*ui];
     }
-   cout<<"indegree calculation................"<<endl;
+  // cout<<"indegree calculation................"<<endl;
   for(unsigned int i=0;i<lines.size();i++)
   {
     degree_in[i]=deg1[i]-deg[i];
-    cout<<degree_in[i]<<endl;  
+   // cout<<degree_in[i]<<endl;  
   }
 /*
   std::cout << "vertex set: ";
@@ -156,6 +154,10 @@ public:
   std::cout << std::endl;
 
  */
+ std::cout << "incident edges: " << std::endl;
+  print_graph(g, node);
+  std::cout << std::endl;
+
 
 // Here is the calculation of the stochastic matrix of the adjacency matrix
 	/*    
@@ -175,7 +177,7 @@ public:
   degree_calculate(); 
   ofstream myfile;
   myfile.open ("total_degree.txt");
-  for(int i=0;i<73;i++)
+  for(int i=0;i<N;i++)
   {
   myfile << total_degree_information[i]<<endl;
   }
